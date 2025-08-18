@@ -14,9 +14,18 @@ namespace Bootcamp2_AspMVC.Controllers
             _context = context;
 
         }
+
         public IActionResult Index()
         {
             var  employees = _context.Employees.ToList();
+            if (employees.Any())
+            {
+                TempData["Sucees"] = "تم جلب البيانات بنجاح";
+            }
+            else
+            {
+                TempData["Error"] = "لا توجد بيانات لعرضها";
+            }
             return View(employees);
         }
 
@@ -33,6 +42,7 @@ namespace Bootcamp2_AspMVC.Controllers
 
             _context.Employees.Add(employee);
             _context.SaveChanges();
+            TempData["Add"] = "تم اضافة البيانات بنجاح";
             return RedirectToAction("Index");
 
 
@@ -53,6 +63,7 @@ namespace Bootcamp2_AspMVC.Controllers
 
             _context.Employees.Update(emp);
             _context.SaveChanges();
+            TempData["Update"] = "تم تعديل البيانات بنجاح";
             return RedirectToAction("Index");
 
 
@@ -73,6 +84,7 @@ namespace Bootcamp2_AspMVC.Controllers
 
             _context.Employees.Remove(emp);
             _context.SaveChanges();
+            TempData["Remove"] = "تم حذف البيانات بنجاح";
             return RedirectToAction("Index");
 
 

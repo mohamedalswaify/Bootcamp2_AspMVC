@@ -57,6 +57,7 @@ namespace Bootcamp2_AspMVC.Controllers
 
             _context.Categories.Add(category);
             _context.SaveChanges();
+            TempData["Add"] = "تم اضافة البيانات بنجاح";
             return RedirectToAction("Index");
 
           
@@ -79,6 +80,7 @@ namespace Bootcamp2_AspMVC.Controllers
 
             _context.Categories.Update(category);
             _context.SaveChanges();
+            TempData["Update"] = "تم تحديث البيانات بنجاح";
             return RedirectToAction("Index");
 
 
@@ -99,6 +101,7 @@ namespace Bootcamp2_AspMVC.Controllers
 
             _context.Categories.Remove(category);
             _context.SaveChanges();
+            TempData["Remove"] = "تم حذف البيانات بنجاح";
             return RedirectToAction("Index");
 
 
