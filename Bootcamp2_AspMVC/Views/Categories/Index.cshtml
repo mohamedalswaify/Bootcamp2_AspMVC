@@ -4,7 +4,62 @@
    // layout="~/Views/Shared/_Layout2.cshtml";
 }
 
-<h1>Index</h1>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<h1>Category List</h1>
+
+@* @if(Model !=null && Model.Any())
+{
+
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        تم تحميل البيانات بنجاح ✅
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+else
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        فشل في تحميل البيانات ❌
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+} *@
+
+
+
+@if (TempData["Sucees"] != null)
+{
+
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Sucees"] ✅
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <script>
+        toastr.success('@TempData["Sucees"]', 'نجاح');
+</script>
+
+
+
+
+
+}
+@if(TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["Error"] ❌
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <script>
+        toastr.error('@TempData["Error"]', 'خطأ');
+        </script>
+}
+
+
+
+
+
+
 <div class="text-end">
         <a  asp-action="Create" class="btn btn-primary mb-3" >Create New</a>
 </div>

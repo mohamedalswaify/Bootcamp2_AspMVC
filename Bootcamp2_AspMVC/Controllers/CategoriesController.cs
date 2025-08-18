@@ -26,8 +26,21 @@ namespace Bootcamp2_AspMVC.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            IEnumerable<Category> category = _context.Categories.ToList();
-            return  View(category);
+            IEnumerable<Category> category = _context.Categories.ToList().Where(e=>e.Id<50);
+
+
+            if(category.Any())
+            {
+                TempData["Sucees"]= "تم جلب البيانات بنجاح";
+            }
+            else
+            {
+                TempData["Error"] = "لا توجد بيانات لعرضها";
+
+            }
+
+            return View(category);
+
         }
 
         [HttpGet]

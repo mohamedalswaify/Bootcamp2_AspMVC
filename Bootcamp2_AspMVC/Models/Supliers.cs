@@ -2,8 +2,9 @@
 
 namespace Bootcamp2_AspMVC.Models
 {
-    public class Employee
+    public class Supliers
     {
+
         [Key]
         public int Id { get; set; }
         public string FirstName { get; set; }
@@ -12,6 +13,5 @@ namespace Bootcamp2_AspMVC.Models
         public string Address { get; set; }
         public decimal Salary { get; set; }
         public DateTime AddDate { get; set; } = DateTime.Now;
-
     }
 }

@@ -19,19 +19,23 @@
             <th>Email</th>
             <th>PhoneNumber</th>
             <th>Salary</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
 
-        @foreach (var category in Model)
+        @foreach (var emp in Model)
         {
             <tr>
-                <td>@category.Id</td>
-                <td>@category.FirstName</td>
-                <td>@category.LastName</td>
-                <td>@category.Email</td>
-                <td>@category.PhoneNumber</td>
-                <td>@category.Salary</td>
+                <td>@emp.Id</td>
+                <td>@emp.FirstName</td>
+                <td>@emp.LastName</td>
+                <td>@emp.Email</td>
+                <td>@emp.Salary</td>
+                <td>
+                    <a asp-action="Edit" asp-route-Id="@emp.Id" class="btn btn-warning">Edit</a>
+                    <a asp-action="Delete" asp-route-Id="@emp.Id" class="btn btn-danger">Delete</a>
+                </td>
             </tr>
 
         }
