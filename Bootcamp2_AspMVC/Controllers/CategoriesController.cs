@@ -1,4 +1,5 @@
 ﻿using Bootcamp2_AspMVC.Data;
+using Bootcamp2_AspMVC.Dtos;
 using Bootcamp2_AspMVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,9 +17,16 @@ namespace Bootcamp2_AspMVC.Controllers
         }
 
         [HttpGet]
-        public  ActionResult<IEnumerable<Category>> GetAll()
+        public  ActionResult<IEnumerable<CategoryDto>> GetAll()
         {
-            var categories =  _context.Categories.ToList();
+            var categories =  _context.Categories
+                .Include(c => c.Products).Select(c => new CategoryDto
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Count = c.Products.Count()
+                })
+                .ToList();
 
             return Ok(categories); // يرجّع JSON
         }
@@ -26,7 +34,7 @@ namespace Bootcamp2_AspMVC.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            IEnumerable<Category> category = _context.Categories.ToList().Where(e=>e.Id<50);
+            IEnumerable<Category> category = _context.Categories.ToList();
 
 
             if(category.Any())
@@ -55,12 +63,37 @@ namespace Bootcamp2_AspMVC.Controllers
         public IActionResult Create(Category category)
         {
 
-            _context.Categories.Add(category);
-            _context.SaveChanges();
-            TempData["Add"] = "تم اضافة البيانات بنجاح";
-            return RedirectToAction("Index");
 
-          
+
+            try
+            {
+                if (category.Name == "100")
+                {
+                    ModelState.AddModelError("CustomError", "Name Van not be Equal 100");
+                }
+
+
+                if (ModelState.IsValid)
+                {
+                    category.Name = null;
+                    _context.Categories.Add(category);
+                    _context.SaveChanges();
+                    TempData["Add"] = "تم اضافة البيانات بنجاح";
+                    return RedirectToAction("Index");
+
+                }
+                else
+                {
+                    return View(category);
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "حدث خطأ أثناء إضافة البيانات: " + ex.Message);
+                return View(category);
+            }
+
+
         }
 
 
@@ -98,7 +131,7 @@ namespace Bootcamp2_AspMVC.Controllers
         [HttpPost]
         public IActionResult Delete(Category category)
         {
-
+        
             _context.Categories.Remove(category);
             _context.SaveChanges();
             TempData["Remove"] = "تم حذف البيانات بنجاح";
