@@ -1,6 +1,6 @@
 ﻿using Bootcamp2_AspMVC.Data;
 using Bootcamp2_AspMVC.Models;
-using Bootcamp2_AspMVC.Repository;
+using Bootcamp2_AspMVC.Repository.Base;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bootcamp2_AspMVC.Controllers

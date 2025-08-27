@@ -1,7 +1,7 @@
 ﻿using Bootcamp2_AspMVC.Data;
 using Bootcamp2_AspMVC.Dtos;
 using Bootcamp2_AspMVC.Models;
-using Bootcamp2_AspMVC.Repository;
+using Bootcamp2_AspMVC.Repository.Base;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,7 +10,7 @@ namespace Bootcamp2_AspMVC.Controllers
     public class CategoriesController : Controller
     {
 
-        //private readonly ApplicationDbContext _context;
+       private readonly ApplicationDbContext _context;
         private readonly IRepository<Category> _repository;
         public CategoriesController( IRepository<Category> repository)
         {
@@ -41,6 +41,21 @@ namespace Bootcamp2_AspMVC.Controllers
         }
 
 
+
+        [HttpGet]
+        public ActionResult<IEnumerable<CategoryDto>> GetAll()
+        {
+            var categories = _context.Categories
+                .Include(c => c.Products).Select(c => new CategoryDto
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Count = c.Products.Count()
+                })
+                .ToList();
+
+            return Ok(categories); // يرجّع JSON
+        }
 
 
 

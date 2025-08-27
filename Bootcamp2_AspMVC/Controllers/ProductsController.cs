@@ -1,6 +1,7 @@
 ﻿using Bootcamp2_AspMVC.Data;
 using Bootcamp2_AspMVC.Dtos;
 using Bootcamp2_AspMVC.Models;
+using Bootcamp2_AspMVC.Repository.Base;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,47 +10,71 @@ namespace Bootcamp2_AspMVC.Controllers
 {
     public class ProductsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        //private readonly ApplicationDbContext _context;
+        //public ProductsController(ApplicationDbContext context)
+        //{
+        //    _context = context;
+        //}
 
-        public ProductsController(ApplicationDbContext context)
+        private readonly IRepository<Category> _repositoryCategory;
+
+     //   private readonly IRepository<Product> _repository;  
+        private readonly IRepoProduct _repoProduct;
+
+        public ProductsController( IRepository<Category> repositoryCategory , IRepoProduct repoProduct)
         {
-            _context = context;
+         
+            _repositoryCategory = repositoryCategory;
+            _repoProduct = repoProduct;
         }
 
 
 
+        //public IActionResult Index()
+        //{
+        //    IEnumerable<Product> products = _context.Products.Include(e => e.Category).ToList();
+        //    return View(products);
+        //}
+
         public IActionResult Index()
         {
-            IEnumerable<Product> products = _context.Products.Include(e => e.Category).ToList();
+            IEnumerable<Product> products = _repoProduct.FindAllproducts();
             return View(products);
         }
 
 
-        public IActionResult GetAll2()
-        {
-            IEnumerable<Product> products = _context.Products.Include(e=>e.Category).AsNoTracking().ToList();
-            return Ok(products);
-        }
+        //public IActionResult Index()
+        //{
+        //    IEnumerable<Product> products = _repository.FindAll();
+        //    return View(products);
+        //}
+
+
+        //public IActionResult GetAll2()
+        //{
+        //    IEnumerable<Product> products = _context.Products.Include(e=>e.Category).AsNoTracking().ToList();
+        //    return Ok(products);
+        //}
 
 
 
-        public IActionResult GetAll()
-        {
-            IEnumerable<ProductDto> products = 
-                _context.Products.
-                Include(e => e.Category)
-                .AsNoTracking()
-                .Select(p => new ProductDto
-                {
-                    Id = p.Id,
-                    ProductName = p.ProductName,
-                    Price = p.Price,
-                    CategoryId = p.CategoryId,
-                    CategoryName = p.Category.Name
-                })
-                .ToList();
-            return Ok(products);
-        }
+        //public IActionResult GetAll()
+        //{
+        //    IEnumerable<ProductDto> products = 
+        //        _context.Products.
+        //        Include(e => e.Category)
+        //        .AsNoTracking()
+        //        .Select(p => new ProductDto
+        //        {
+        //            Id = p.Id,
+        //            ProductName = p.ProductName,
+        //            Price = p.Price,
+        //            CategoryId = p.CategoryId,
+        //            CategoryName = p.Category.Name
+        //        })
+        //        .ToList();
+        //    return Ok(products);
+        //}
 
 
 
@@ -66,7 +91,7 @@ namespace Bootcamp2_AspMVC.Controllers
             // };
 
 
-            List<Category> categories = _context.Categories.ToList();
+            IEnumerable<Category> categories = _repositoryCategory.FindAll();
 
             SelectList selectListItems = new SelectList(categories, "Id", "Name", 0);
         ViewBag.Categories = selectListItems;
@@ -92,8 +117,11 @@ namespace Bootcamp2_AspMVC.Controllers
             if (ModelState.IsValid)
             {
 
-                _context.Products.Add(ptoducts);
-                _context.SaveChanges();
+                //_context.Products.Add(ptoducts);
+                //_context.SaveChanges();
+
+                _repoProduct.Add(ptoducts);
+
                 TempData["Add"] = "تم اضافة البيانات بنجاح";
                 return RedirectToAction("Index");
 
@@ -110,7 +138,9 @@ namespace Bootcamp2_AspMVC.Controllers
         [HttpGet]
         public IActionResult Edit(int Id)
         {
-            var cate = _context.Products.Find(Id);
+            //var cate = _context.Products.Find(Id);
+            var cate = _repoProduct.FindById(Id);
+
             CreateCategorySelectList();
 
             return View(cate);
@@ -121,8 +151,9 @@ namespace Bootcamp2_AspMVC.Controllers
         public IActionResult Edit(Product product)
         {
 
-            _context.Products.Update(product);
-            _context.SaveChanges();
+            //_context.Products.Update(product);
+            //_context.SaveChanges();
+            _repoProduct.Update(product);
             TempData["Update"] = "تم تحديث البيانات بنجاح";
             return RedirectToAction("Index");
 

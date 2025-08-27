@@ -13,7 +13,8 @@ var conectionString = builder.Configuration.GetConnectionString("DefaultConnecti
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(conectionString));
 
-builder.Services.AddTransient(typeof(IRepository<>), typeof(MainRepository<>));
+builder.Services.AddScoped(typeof(IRepository<>), typeof(MainRepository<>));
+builder.Services.AddScoped<IRepoProduct, RepoProduct>();
 
 
 
