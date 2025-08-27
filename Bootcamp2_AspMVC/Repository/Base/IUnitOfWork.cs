@@ -1,0 +1,19 @@
+﻿using Bootcamp2_AspMVC.Models;
+
+namespace Bootcamp2_AspMVC.Repository.Base
+{
+    public interface IUnitOfWork
+    {
+        IRepoProduct Products { get; }
+         
+        IRepository<Category> Categories { get; }
+
+        IRepository<Employee> Employees { get; }
+
+        void Save();
+
+
+
+
+    }
+}

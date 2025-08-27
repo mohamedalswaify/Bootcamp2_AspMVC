@@ -15,18 +15,27 @@ namespace Bootcamp2_AspMVC.Controllers
         //{
         //    _context = context;
         //}
+        //   private readonly IRepository<Product> _repository;  
 
-        private readonly IRepository<Category> _repositoryCategory;
 
-     //   private readonly IRepository<Product> _repository;  
-        private readonly IRepoProduct _repoProduct;
+        //private readonly IRepository<Category> _repositoryCategory;
+        //private readonly IRepoProduct _repoProduct;
 
-        public ProductsController( IRepository<Category> repositoryCategory , IRepoProduct repoProduct)
+        //public ProductsController( IRepository<Category> repositoryCategory , IRepoProduct repoProduct)
+        //{
+
+        //    _repositoryCategory = repositoryCategory;
+        //    _repoProduct = repoProduct;
+        //}
+
+
+        private readonly IUnitOfWork _unitOfWork;
+        public ProductsController(IUnitOfWork unitOfWork)
         {
-         
-            _repositoryCategory = repositoryCategory;
-            _repoProduct = repoProduct;
+            _unitOfWork = unitOfWork;
         }
+
+
 
 
 
@@ -38,7 +47,7 @@ namespace Bootcamp2_AspMVC.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<Product> products = _repoProduct.FindAllproducts();
+            IEnumerable<Product> products = _unitOfWork.Products.FindAllproducts();
             return View(products);
         }
 
@@ -91,7 +100,7 @@ namespace Bootcamp2_AspMVC.Controllers
             // };
 
 
-            IEnumerable<Category> categories = _repositoryCategory.FindAll();
+            IEnumerable<Category> categories = _unitOfWork.Categories.FindAll();
 
             SelectList selectListItems = new SelectList(categories, "Id", "Name", 0);
         ViewBag.Categories = selectListItems;
@@ -120,7 +129,8 @@ namespace Bootcamp2_AspMVC.Controllers
                 //_context.Products.Add(ptoducts);
                 //_context.SaveChanges();
 
-                _repoProduct.Add(ptoducts);
+                _unitOfWork.Products.Add(ptoducts);
+                _unitOfWork.Save();
 
                 TempData["Add"] = "تم اضافة البيانات بنجاح";
                 return RedirectToAction("Index");
@@ -139,7 +149,7 @@ namespace Bootcamp2_AspMVC.Controllers
         public IActionResult Edit(int Id)
         {
             //var cate = _context.Products.Find(Id);
-            var cate = _repoProduct.FindById(Id);
+            var cate = _unitOfWork.Products.FindById(Id);
 
             CreateCategorySelectList();
 
@@ -153,7 +163,8 @@ namespace Bootcamp2_AspMVC.Controllers
 
             //_context.Products.Update(product);
             //_context.SaveChanges();
-            _repoProduct.Update(product);
+            _unitOfWork.Products.Update(product);
+            _unitOfWork.Save();
             TempData["Update"] = "تم تحديث البيانات بنجاح";
             return RedirectToAction("Index");
 
