@@ -9,6 +9,9 @@ namespace Bootcamp2_AspMVC.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
+
+        public string Username { get; set; }
+        public string Password { get; set; }
         public string Address { get; set; }
         public decimal Salary { get; set; }
         public DateTime AddDate { get; set; } = DateTime.Now;

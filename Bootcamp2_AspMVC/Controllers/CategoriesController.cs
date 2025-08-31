@@ -1,5 +1,6 @@
 ﻿using Bootcamp2_AspMVC.Data;
 using Bootcamp2_AspMVC.Dtos;
+using Bootcamp2_AspMVC.Filters;
 using Bootcamp2_AspMVC.Models;
 using Bootcamp2_AspMVC.Repository.Base;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bootcamp2_AspMVC.Controllers
 {
+    [SessionAuthorize]
     public class CategoriesController : Controller
     {
 

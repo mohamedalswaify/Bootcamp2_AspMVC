@@ -1,5 +1,6 @@
 ﻿using Bootcamp2_AspMVC.Data;
 using Bootcamp2_AspMVC.Models;
+using Bootcamp2_AspMVC.Repository;
 using Bootcamp2_AspMVC.Repository.Base;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,17 +8,19 @@ namespace Bootcamp2_AspMVC.Controllers
 {
     public class EmployeesController : Controller
     {
-        private readonly IRepository<Employee> _repository;
+        //private readonly IRepository<Employee> _repository;
 
-        
-        public EmployeesController(IRepository<Employee> repository)
+        private readonly IUnitOfWork _unitOfWork;
+
+        public EmployeesController(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
+
         }
 
         public IActionResult Index()
         {
-            var  employees = _repository.FindAll();
+            var  employees = _unitOfWork.Employees.FindAll();
             if (employees.Any())
             {
                 TempData["Sucees"] = "تم جلب البيانات بنجاح";
@@ -42,7 +45,8 @@ namespace Bootcamp2_AspMVC.Controllers
 
             //_context.Employees.Add(employee);
             //_context.SaveChanges();
-            _repository.Add(employee);
+            _unitOfWork.Employees.Add(employee);
+            _unitOfWork.Save();
             TempData["Add"] = "تم اضافة البيانات بنجاح";
             return RedirectToAction("Index");
 
@@ -53,7 +57,7 @@ namespace Bootcamp2_AspMVC.Controllers
         public IActionResult Edit(int Id)
         {
             //var cate = _context.Employees.Find(Id);
-            var cate = _repository.FindById(Id);
+            var cate = _unitOfWork.Employees.FindById(Id);
 
             return View(cate);
         }
@@ -66,8 +70,8 @@ namespace Bootcamp2_AspMVC.Controllers
             //_context.Employees.Update(emp);
             //_context.SaveChanges();
 
-            _repository.Update(emp);
-
+            _unitOfWork.Employees.Update(emp);
+            _unitOfWork.Save();
             TempData["Update"] = "تم تعديل البيانات بنجاح";
             return RedirectToAction("Index");
 
@@ -78,7 +82,7 @@ namespace Bootcamp2_AspMVC.Controllers
         public IActionResult Delete(int Id)
         {
             //var cate = _context.Employees.Find(Id);
-            var cate =  _repository.FindById(Id);
+            var cate = _unitOfWork.Employees.FindById(Id);
 
             return View(cate);
         }
@@ -90,7 +94,8 @@ namespace Bootcamp2_AspMVC.Controllers
 
             //_context.Employees.Remove(emp);
             //_context.SaveChanges();
-            _repository.Delete(emp);
+            _unitOfWork.Employees.Delete(emp);
+            _unitOfWork.Save();
             TempData["Remove"] = "تم حذف البيانات بنجاح";
             return RedirectToAction("Index");
 
