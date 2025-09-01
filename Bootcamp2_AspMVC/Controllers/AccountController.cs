@@ -32,8 +32,21 @@ namespace Bootcamp2_AspMVC.Controllers
         {
             var emp = _unitOfWork.Employees.Login(username, password);
 
+
+
+
+
             if (emp != null)
             {
+                if (emp.Islock)
+                {
+
+                    ViewBag.Error = "تم اغلاق  هذا المستخدم  يرجي مراجعة الادمن";
+                    return View();
+
+                }
+
+
 
                 HttpContext.Session.SetString("Username", emp.FirstName);
                 HttpContext.Session.SetInt32("Id", emp.Id);

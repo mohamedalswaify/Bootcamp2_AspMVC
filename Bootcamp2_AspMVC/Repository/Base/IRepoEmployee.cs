@@ -6,5 +6,7 @@ namespace Bootcamp2_AspMVC.Repository.Base
     {
 
         Employee Login(string username, string password);
+
+        IEnumerable<Employee> FindAllEmployee();
     }
 }

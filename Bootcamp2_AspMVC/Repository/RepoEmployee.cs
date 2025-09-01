@@ -14,9 +14,19 @@ namespace Bootcamp2_AspMVC.Repository
 
         public Employee Login(string username, string password)
         {
-            var emp = _context.Employees.FirstOrDefault(e => e.Username == username && e.Password == password);
+            var emp = _context.Employees.FirstOrDefault(e => e.Username == username && e.Password == password );
             return emp;
         }
+
+
+        public IEnumerable<Employee> FindAllEmployee()
+        {
+            return _context.Employees.ToList().Where(e=>!e.IsDelete);
+        }
+
+
+
+
     }
-    
+
 }

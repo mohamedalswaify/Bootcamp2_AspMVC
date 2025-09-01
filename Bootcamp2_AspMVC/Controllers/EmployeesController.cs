@@ -20,7 +20,7 @@ namespace Bootcamp2_AspMVC.Controllers
 
         public IActionResult Index()
         {
-            var  employees = _unitOfWork.Employees.FindAll();
+            var  employees = _unitOfWork.Employees.FindAllEmployee();
             if (employees.Any())
             {
                 TempData["Sucees"] = "تم جلب البيانات بنجاح";
@@ -89,12 +89,17 @@ namespace Bootcamp2_AspMVC.Controllers
 
 
         [HttpPost]
-        public IActionResult Delete(Employee emp)
+        public IActionResult Deletepost(int Id)
         {
 
             //_context.Employees.Remove(emp);
             //_context.SaveChanges();
-            _unitOfWork.Employees.Delete(emp);
+            //_unitOfWork.Employees.Delete(emp);
+            //_unitOfWork.Save();
+
+            var emp = _unitOfWork.Employees.FindById(Id);
+            emp.IsDelete = true;
+            _unitOfWork.Employees.Update(emp);
             _unitOfWork.Save();
             TempData["Remove"] = "تم حذف البيانات بنجاح";
             return RedirectToAction("Index");

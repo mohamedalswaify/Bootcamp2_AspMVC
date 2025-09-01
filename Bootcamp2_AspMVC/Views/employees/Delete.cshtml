@@ -7,7 +7,9 @@
 <h1>Delete</h1>
 
 
-<form asp-action="Delete" method="post">
+<form asp-action="Deletepost" method="post">
+
+    <input asp-for="Id" name="Id" hidden class="form-control" />
 
     <div>
         <label>FirstName:</label>
@@ -32,7 +34,7 @@
     </div>
 
     <hr>
-    <button type="submit" class="btn btn-danager">Save</button>
+    <button type="submit" class="btn btn-danger">Delete</button>
 
 
 </form>
