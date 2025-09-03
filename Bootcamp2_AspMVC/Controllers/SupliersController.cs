@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bootcamp2_AspMVC.Data;
 using Bootcamp2_AspMVC.Models;
+using Bootcamp2_AspMVC.Filters;
 
 namespace Bootcamp2_AspMVC.Controllers
 {
+    [SessionAuthorize]
     public class SupliersController : Controller
     {
         private readonly ApplicationDbContext _context;

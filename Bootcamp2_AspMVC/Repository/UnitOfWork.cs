@@ -15,13 +15,16 @@ namespace Bootcamp2_AspMVC.Repository
             Products = new RepoProduct(_context);
             Categories = new MainRepository<Category>(_context);
             Employees = new  RepoEmployee(_context);
-        
+            Permissions= new MainRepository<Permission>(_context);
+
+
 
         }
 
         public IRepoProduct Products { get; }
 
         public IRepository<Category> Categories { get; }
+        public IRepository<Permission> Permissions { get; }
 
         //public IRepository<Employee> Employees { get; }
         public IRepoEmployee Employees { get; }

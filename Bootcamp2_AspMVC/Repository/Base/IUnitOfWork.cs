@@ -9,6 +9,7 @@ namespace Bootcamp2_AspMVC.Repository.Base
         IRepoEmployee Employees { get; }
 
         IRepository<Category> Categories { get; }
+        IRepository<Permission> Permissions { get; }
 
        // IRepository<Employee> Employees { get; }
 

@@ -1,4 +1,5 @@
 ﻿using Bootcamp2_AspMVC.Data;
+using Bootcamp2_AspMVC.Filters;
 using Bootcamp2_AspMVC.Models;
 using Bootcamp2_AspMVC.Repository;
 using Bootcamp2_AspMVC.Repository.Base;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Bootcamp2_AspMVC.Controllers
 {
+    [SessionAuthorize]
     public class EmployeesController : Controller
     {
         //private readonly IRepository<Employee> _repository;
@@ -99,6 +101,8 @@ namespace Bootcamp2_AspMVC.Controllers
 
             var emp = _unitOfWork.Employees.FindById(Id);
             emp.IsDelete = true;
+            emp.UserDelete = HttpContext.Session.GetInt32("Id") ?? 0;
+            emp.DeleteDate = DateTime.Now;
             _unitOfWork.Employees.Update(emp);
             _unitOfWork.Save();
             TempData["Remove"] = "تم حذف البيانات بنجاح";

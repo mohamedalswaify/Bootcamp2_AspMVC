@@ -4,6 +4,7 @@ using Bootcamp2_AspMVC.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bootcamp2_AspMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250902183649_addRole")]
+    partial class addRole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,33 +104,6 @@ namespace Bootcamp2_AspMVC.Migrations
                     b.HasIndex("UserRoleId");
 
                     b.ToTable("Employees");
-                });
-
-            modelBuilder.Entity("Bootcamp2_AspMVC.Models.Permission", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsCategory")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsEmployee")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsProduct")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("Permissions");
                 });
 
             modelBuilder.Entity("Bootcamp2_AspMVC.Models.Product", b =>
@@ -220,17 +196,6 @@ namespace Bootcamp2_AspMVC.Migrations
                         .HasForeignKey("UserRoleId");
 
                     b.Navigation("UserRole");
-                });
-
-            modelBuilder.Entity("Bootcamp2_AspMVC.Models.Permission", b =>
-                {
-                    b.HasOne("Bootcamp2_AspMVC.Models.Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("Bootcamp2_AspMVC.Models.Product", b =>

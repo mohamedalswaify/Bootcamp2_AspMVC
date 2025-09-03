@@ -14,10 +14,13 @@ namespace Bootcamp2_AspMVC.Data
 
         }
       
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Employee> Employees { get; set; }
-        public DbSet<Supliers> Supliers { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<Employee> Employees { get; set; }
+        public virtual DbSet<Supliers> Supliers { get; set; }
+        public virtual DbSet<UserRole> UserRoles { get; set; }
+
+        public virtual DbSet<Permission> Permissions { get; set; }
 
 
 

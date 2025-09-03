@@ -34,8 +34,6 @@ namespace Bootcamp2_AspMVC.Controllers
 
 
 
-
-
             if (emp != null)
             {
                 if (emp.Islock)
@@ -46,11 +44,28 @@ namespace Bootcamp2_AspMVC.Controllers
 
                 }
 
+                if (emp.UserRoleId == 1)
+                {
+
+                    HttpContext.Session.SetString("Username", emp.FirstName);
+                    HttpContext.Session.SetInt32("Id", emp.Id);
+                    return RedirectToAction("Index", "Home");
+
+                }
+                else {
 
 
-                HttpContext.Session.SetString("Username", emp.FirstName);
-                HttpContext.Session.SetInt32("Id", emp.Id);
-                return RedirectToAction("Index", "Home");
+                    HttpContext.Session.SetString("UsernameEmployee", emp.FirstName);
+                    HttpContext.Session.SetInt32("Id", emp.Id);
+                    return RedirectToAction("Index", "HomeEmployee");
+
+
+                }
+
+
+
+
+          
             }
 
             //if (username == "admin" && password == "123")
