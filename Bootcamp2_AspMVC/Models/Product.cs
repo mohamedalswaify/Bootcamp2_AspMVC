@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bootcamp2_AspMVC.Models
 {
@@ -16,5 +17,9 @@ namespace Bootcamp2_AspMVC.Models
         public int Qty { get; set; }    
 
         public string? Description { get; set; }
+
+        [NotMapped]
+        public IFormFile? ImageFile { get; set; }
+        public string? ImageUrl { get; set; }
     }
 }
