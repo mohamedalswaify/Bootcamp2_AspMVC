@@ -20,6 +20,12 @@ namespace Bootcamp2_AspMVC.Repository
             return products;
         }
 
+        public Product FindByIdproduct(int id)
+        {
+            Product product = _context.Products.Include(e => e.Category).AsNoTracking().FirstOrDefault(p => p.Id == id);
+            return product;
+        }
+
 
 
     }

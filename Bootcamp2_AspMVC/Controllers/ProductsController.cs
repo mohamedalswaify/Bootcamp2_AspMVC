@@ -125,7 +125,7 @@ namespace Bootcamp2_AspMVC.Controllers
 
             // مسار المجلد داخل wwwroot
             var folder = Path.Combine("uploads", "products");
-            var rootFolder = Path.Combine(_env.WebRootPath, folder);             //              wwwrot\\uploads\\products
+            var rootFolder = Path.Combine(_env.WebRootPath, folder);   
 
             // إنشاء المجلد لو غير موجود
             Directory.CreateDirectory(rootFolder);
@@ -238,7 +238,7 @@ namespace Bootcamp2_AspMVC.Controllers
 
             //_context.Products.Update(product);
             //_context.SaveChanges();
-            var exist = _unitOfWork.Products.FindById(product.Id);
+            var exist = _unitOfWork.Products.FindByIdproduct(product.Id);
 
             if (product.ImageFile != null)
             {
