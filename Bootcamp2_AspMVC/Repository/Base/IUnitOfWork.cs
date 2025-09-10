@@ -7,6 +7,7 @@ namespace Bootcamp2_AspMVC.Repository.Base
         IRepoProduct Products { get; }
 
         IRepoEmployee Employees { get; }
+        IRepoCategory RepoCategory { get; }
 
         IRepository<Category> Categories { get; }
         IRepository<Permission> Permissions { get; }

@@ -15,10 +15,12 @@ namespace BootCamp2_AspAPI.Controllers
 
         private readonly ApplicationDbContext _context;
         private readonly IRepository<Category> _repository;
-        public CategoriesController(IRepository<Category> repository)
+        private readonly IUnitOfWork _unitOfWork;
+        public CategoriesController(IRepository<Category> repository, IUnitOfWork unitOfWork)
         {
 
             _repository = repository;
+            _unitOfWork = unitOfWork;
 
         }
 
@@ -30,7 +32,8 @@ namespace BootCamp2_AspAPI.Controllers
                .Select(c => new CategoryDto
                 {
                     Id = c.Id,
-                    Name = c.Name,
+                    uid =c.uid,
+                   Name = c.Name,
                     Count = c.Products.Count()
                 }).Where(c => c.Id >= id)
                 .ToList();
@@ -58,6 +61,39 @@ namespace BootCamp2_AspAPI.Controllers
 
             return Ok(cate);
         }
+
+
+
+        [HttpGet("GetByIdquery")]
+        public IActionResult GetByIdquery( [FromQuery] int Id)
+        {
+            var cate = _repository.FindById(Id);
+            if (cate == null)
+            {
+                return NotFound(new { Message = "لا توجد نتائج لهذا الرقم" });
+            }
+
+            return Ok(cate);
+        }
+
+
+
+
+
+        [HttpGet("GetByUId/{uid}")]
+        public IActionResult GetByUId(string uid)
+        {
+            var cate = _unitOfWork.RepoCategory.FindByUIdcategory(uid);
+            if (cate == null)
+            {
+                return NotFound(new { Message = "لا توجد نتائج لهذا الرقم" });
+            }
+
+            return Ok(cate);
+        }
+
+
+
 
 
 

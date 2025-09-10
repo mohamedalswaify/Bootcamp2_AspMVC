@@ -38,7 +38,7 @@ namespace Bootcamp2_AspMVC.Repository
         public void Update(T entity)
         {
             _context.Set<T>().Update(entity);
-            //_context.SaveChanges();
+            _context.SaveChanges();
         }
 
 

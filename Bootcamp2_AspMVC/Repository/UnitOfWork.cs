@@ -16,6 +16,7 @@ namespace Bootcamp2_AspMVC.Repository
             Categories = new MainRepository<Category>(_context);
             Employees = new  RepoEmployee(_context);
             Permissions= new MainRepository<Permission>(_context);
+            RepoCategory = new RepoCategory(_context);
 
 
 
@@ -28,6 +29,7 @@ namespace Bootcamp2_AspMVC.Repository
 
         //public IRepository<Employee> Employees { get; }
         public IRepoEmployee Employees { get; }
+        public IRepoCategory RepoCategory { get; }
         public void Save()
         {
             _context.SaveChanges();

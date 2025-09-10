@@ -159,6 +159,7 @@ namespace Bootcamp2_AspMVC.Controllers
         public IActionResult Edit(Category category)
         {
 
+            category.uid = Guid.NewGuid().ToString();
             _repository.Update(category);
             TempData["Update"] = "تم تحديث البيانات بنجاح";
             return RedirectToAction("Index");

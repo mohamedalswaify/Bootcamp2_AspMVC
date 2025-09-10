@@ -2,10 +2,13 @@
 
 namespace Bootcamp2_AspMVC.Models
 {
-    public class Category
+    public class Category 
     {
         [Key]
         public int Id { get; set; }
+
+
+        public string uid { get; set; } = Guid.NewGuid().ToString();
 
         [Required]
         public string Name { get; set; }
