@@ -1,5 +1,5 @@
 ﻿
-using Bootcamp2_AspMVC.Migrations;
+
 using Bootcamp2_AspMVC.Models;
 using Bootcamp2_AspMVC.Repository.Base;
 using Microsoft.AspNetCore.Mvc;

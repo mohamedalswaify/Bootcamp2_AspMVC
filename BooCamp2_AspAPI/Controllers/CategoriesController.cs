@@ -80,17 +80,17 @@ namespace BootCamp2_AspAPI.Controllers
 
 
 
-        [HttpGet("GetByUId/{uid}")]
-        public IActionResult GetByUId(string uid)
-        {
-            var cate = _unitOfWork.RepoCategory.FindByUIdcategory(uid);
-            if (cate == null)
-            {
-                return NotFound(new { Message = "لا توجد نتائج لهذا الرقم" });
-            }
+        //[HttpGet("GetByUId/{uid}")]
+        //public IActionResult GetByUId(string uid)
+        //{
+        //    var cate = _unitOfWork.RepoCategory.FindByUIdcategory(uid);
+        //    if (cate == null)
+        //    {
+        //        return NotFound(new { Message = "لا توجد نتائج لهذا الرقم" });
+        //    }
 
-            return Ok(cate);
-        }
+        //    return Ok(cate);
+        //}
 
 
 

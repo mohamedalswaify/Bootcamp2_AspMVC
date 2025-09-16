@@ -9,6 +9,7 @@ namespace Bootcamp2_AspMVC.Repository.Base
         IEnumerable<Product> FindAllproducts();
 
         Product FindByIdproduct(int id);
+        Product FindByUIdproduct(string uid);
 
     }
 }

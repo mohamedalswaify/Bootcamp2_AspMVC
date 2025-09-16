@@ -2,6 +2,7 @@
 using Bootcamp2_AspMVC.Models;
 using Bootcamp2_AspMVC.Repository.Base;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bootcamp2_AspMVC.Controllers
 {
@@ -48,7 +49,7 @@ namespace Bootcamp2_AspMVC.Controllers
             {
                 ProductId = p.Id,
                 Quantity = qty,
-           
+
             };
 
 
@@ -56,8 +57,42 @@ namespace Bootcamp2_AspMVC.Controllers
             _context.SaveChanges();
 
 
-            return RedirectToAction("Index", "Cart");
+            return RedirectToAction("Cart");
+
+        }
+        public IActionResult Cart()
+        {
+            var cartItems = _context.CartItems
+                .Include(c => c.Product)
+                .ToList();
+
+            return View(cartItems); // بيرجع View اسمه Cart.cshtml
+        }
+        [HttpPost]
+        public IActionResult UpdateQuantity(int id, int qty)
+        {
+            var item = _context.CartItems.Find(id);
+            if (item != null && qty > 0)
+            {
+                item.Quantity = qty;
+               // _context.CartItems.Update(item);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Cart");
+        }
+
+        public IActionResult RemoveFromCart(int id)
+        {
+            var item = _context.CartItems.Find(id);
+            if (item != null)
+            {
+                _context.CartItems.Remove(item);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Cart");
         }
 
     }
+
 }
+

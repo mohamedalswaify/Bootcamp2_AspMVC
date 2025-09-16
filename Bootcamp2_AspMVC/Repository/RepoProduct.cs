@@ -26,6 +26,12 @@ namespace Bootcamp2_AspMVC.Repository
             return product;
         }
 
+        public Product FindByUIdproduct(string uid)
+        {
+            Product product = _context.Products.FirstOrDefault(c => c.uid == uid);
+            return product;
+
+        }
 
 
     }

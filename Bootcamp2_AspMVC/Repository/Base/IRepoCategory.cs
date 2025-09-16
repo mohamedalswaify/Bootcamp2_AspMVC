@@ -4,7 +4,7 @@ namespace Bootcamp2_AspMVC.Repository.Base
 {
     public interface IRepoCategory : IRepository<Category>
     {
-        Category FindByUIdcategory(string uid);
+        Category FindByUIdCategory(string uid);
 
     }
 }

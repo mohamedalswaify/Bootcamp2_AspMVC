@@ -22,9 +22,8 @@ namespace Bootcamp2_AspMVC.Data
 
         public virtual DbSet<Permission> Permissions { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
+
         public virtual DbSet<CartItem> CartItems { get; set; }
-
-
 
     }
 }

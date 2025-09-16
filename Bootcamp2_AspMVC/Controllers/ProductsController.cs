@@ -73,7 +73,7 @@ namespace Bootcamp2_AspMVC.Controllers
 
         //public IActionResult GetAll()
         //{
-        //    IEnumerable<ProductDto> products = 
+        //    IEnumerable<ProductDto> products =
         //        _context.Products.
         //        Include(e => e.Category)
         //        .AsNoTracking()

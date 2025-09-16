@@ -12,10 +12,11 @@ namespace Bootcamp2_AspMVC.Repository
             _context = context;
         }
 
-        public Category FindByUIdcategory(string uid)
+        public Category FindByUIdCategory(string uid)
         {
-            Category category = _context.Categories.FirstOrDefault(c => c.uid == uid);
-            return category;
+            Category Category= _context.Categories.FirstOrDefault(c => c.uid == uid);
+            return Category;
+
         }
 
     }
