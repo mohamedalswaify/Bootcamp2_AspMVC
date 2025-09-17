@@ -1,4 +1,5 @@
 ﻿using Bootcamp2_AspMVC.Data;
+using Bootcamp2_AspMVC.Filters;
 using Bootcamp2_AspMVC.Models;
 using Bootcamp2_AspMVC.Repository.Base;
 using Microsoft.AspNetCore.Mvc;
@@ -40,7 +41,8 @@ namespace Bootcamp2_AspMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddToCart(int id, int qty = 1)
+        [CustomerSessionAuthorize]
+        public IActionResult AddToCart(int id,  int custId ,int qty = 1)
         {
             var p = _unitOfWork.Products.FindById(id);
             if (p == null) return NotFound();
@@ -49,6 +51,7 @@ namespace Bootcamp2_AspMVC.Controllers
             {
                 ProductId = p.Id,
                 Quantity = qty,
+                CustomerId = custId
 
             };
 
@@ -60,14 +63,29 @@ namespace Bootcamp2_AspMVC.Controllers
             return RedirectToAction("Cart");
 
         }
-        public IActionResult Cart()
+
+
+
+        [CustomerSessionAuthorize]
+        public IActionResult Cart(int custId)
         {
+            
+            if(custId!=0)
+            {
+                int? Id = HttpContext.Session.GetInt32("IdCustomer");
+                if (custId != Id)
+                {
+                    return Unauthorized();
+
+                }
+            }
             var cartItems = _context.CartItems
-                .Include(c => c.Product)
+                .Include(c => c.Product).Where(e => e.CustomerId == custId)
                 .ToList();
 
             return View(cartItems); // بيرجع View اسمه Cart.cshtml
         }
+
         [HttpPost]
         public IActionResult UpdateQuantity(int id, int qty)
         {

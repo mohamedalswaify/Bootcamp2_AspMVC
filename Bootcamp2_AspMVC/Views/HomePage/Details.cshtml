@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+
 }
 
 <div class="container py-5">
@@ -17,9 +18,12 @@
 
             <form asp-action="AddToCart" method="post" class="mt-4">
                 <input type="hidden" name="id" value="@Model.Id" />
+                <input type="hidden" name="custId" value="@Context.Session.GetInt32("IdCustomer")" />
+
                 <div class="input-group" style="max-width: 220px;">
                     <span class="input-group-text">الكمية</span>
                     <input type="number" class="form-control me-2" name="qty" />
+                  
                     <button type="submit" class="btn btn-dark">أضف إلى السلة</button>
                 </div>
                 @Html.AntiForgeryToken()
