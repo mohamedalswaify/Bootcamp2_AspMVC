@@ -1,4 +1,4 @@
-﻿namespace Bootcamp2_AspMVC.Models
+﻿namespace BootCamp2.Domin.Domins.Models
 {
   public class Order
     {

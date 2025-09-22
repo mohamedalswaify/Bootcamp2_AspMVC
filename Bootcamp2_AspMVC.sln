@@ -5,7 +5,7 @@ VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootcamp2_AspMVC", "Bootcamp2_AspMVC\Bootcamp2_AspMVC.csproj", "{30BF548C-143B-434C-ADC0-1EC47E5EA320}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BootCamp2_AspAPI", "BooCamp2_AspAPI\BootCamp2_AspAPI.csproj", "{2FA4AEFB-B59A-4758-B8B4-269474B7B24C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BootCamp2_AspAPI", "BooCamp2_AspAPI\BootCamp2_AspAPI.csproj", "{2FA4AEFB-B59A-4758-B8B4-269474B7B24C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

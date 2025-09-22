@@ -1,6 +1,8 @@
 ﻿using Bootcamp2_AspMVC.Data;
+using Bootcamp2_AspMVC.interfaces;
 using Bootcamp2_AspMVC.Repository;
 using Bootcamp2_AspMVC.Repository.Base;
+using Bootcamp2_AspMVC.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,8 +18,12 @@ options.UseLazyLoadingProxies().
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(MainRepository<>));
 //builder.Services.AddScoped<IRepoProduct, RepoProduct>();
+builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<ICheckoutService, CheckoutService>();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -26,6 +32,7 @@ builder.Services.AddSession(options =>
 });
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

@@ -8,6 +8,18 @@
 <div class="container py-5">
     <h2 class="mb-4">🛒 سلة التسوق</h2>
 
+    @if (TempData["Success"] != null)
+
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+    @if (TempData["Error"] != null)
+
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+
     @if (!Model.Any())
     {
         <div class="alert alert-info">السلة فارغة حالياً.</div>
@@ -52,5 +64,24 @@
                
             </tbody>
         </table>
+
+        @if (Model.Any())
+
+        {
+            <div class="mt-4 text-end">
+                <form asp-action="CreateOrder" method="post">
+                    <input type="hidden" name="custId" value="@Model.First().CustomerId" />
+                    <button type="submit" class="btn btn-success btn-lg">
+                        ✅ تأكيد الطلب
+                    </button>
+                </form>
+            </div>
+        }
+
+
     }
+
+
+
+
 </div>

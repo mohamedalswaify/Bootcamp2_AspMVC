@@ -24,6 +24,10 @@ namespace Bootcamp2_AspMVC.Data
         public virtual DbSet<Customer> Customers { get; set; }
 
         public virtual DbSet<CartItem> CartItems { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<OrderItem> OrderItems { get; set; }
+
+        // public virtual DbSet<OrderDetails> OrderDetails { get; set; }
 
     }
 }

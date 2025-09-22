@@ -1,5 +1,6 @@
 ﻿using Bootcamp2_AspMVC.Data;
 using Bootcamp2_AspMVC.Filters;
+using Bootcamp2_AspMVC.interfaces;
 using Bootcamp2_AspMVC.Models;
 using Bootcamp2_AspMVC.Repository.Base;
 using Microsoft.AspNetCore.Mvc;
@@ -14,11 +15,13 @@ namespace Bootcamp2_AspMVC.Controllers
 
         private readonly IUnitOfWork _unitOfWork;
         private readonly ApplicationDbContext _context;
+        private readonly ICheckoutService _checkoutService;
 
-        public HomePageController(IUnitOfWork unitOfWork, ApplicationDbContext context)
+        public HomePageController(IUnitOfWork unitOfWork, ApplicationDbContext context, ICheckoutService checkoutService)
         {
             _unitOfWork = unitOfWork;
             _context = context;
+            _checkoutService = checkoutService;
         }
 
 
@@ -63,6 +66,31 @@ namespace Bootcamp2_AspMVC.Controllers
             return RedirectToAction("Cart");
 
         }
+
+
+
+
+        [HttpPost]
+        [CustomerSessionAuthorize]
+        public async Task<IActionResult> CreateOrder(int custId)
+        {
+            int? sessionId = HttpContext.Session.GetInt32("IdCustomer");
+            if (custId != sessionId)
+                return Unauthorized();
+
+            // استدعاء خدمة إنشاء الأوردر (اللي شرحناها قبل كده)
+            var (ok, msg, orderId) = await _checkoutService.CreateOrderFromCartAsync(custId);
+
+            if (!ok)
+            {
+                TempData["Error"] = msg;
+                return RedirectToAction("Cart", new { custId });
+            }
+
+            TempData["Success"] = "تم إنشاء الطلب بنجاح.";
+            return RedirectToAction("Details", "Orders", new { id = orderId });
+        }
+
 
 
 

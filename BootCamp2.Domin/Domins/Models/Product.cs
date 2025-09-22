@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Bootcamp2_AspMVC.Models
+namespace BootCamp2.Domin.Domins.Models
 {
     public class Product
     {
